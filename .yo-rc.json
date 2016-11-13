@@ -1,0 +1,7 @@
+{
+  "generator-phaser": {
+    "projectName": "d2vikings",
+    "esVersion": 6,
+    "gameFolder": "boilerplate"
+  }
+}
