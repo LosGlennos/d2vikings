@@ -18,8 +18,6 @@ class Bullet extends Phaser.Sprite {
     }
 
     fire(rotation, player, animation) {
-        console.log(player.x);
-        console.log("rotation: " + rotation);
         if (this.game.time.now > this.nextFire && this.bullets.countDead() > 0) {
             this.nextFire = this.game.time.now + 100;
 
