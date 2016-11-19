@@ -8,4 +8,3 @@ git clone https://github.com/LosGlennos/d2vikings.git`
 npm install
 npm start
 ```
-Copy link displayed, put in browser
