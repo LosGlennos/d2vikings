@@ -11,10 +11,42 @@ class Player extends Phaser.Sprite {
         this.animations.add('leftup', [24, 25, 26, 27], 10, true);
         this.animations.add('rightup', [28, 29, 30, 31], 10, true);
         this.cursors = this.game.input.keyboard.createCursorKeys();
+        this.playerPointer = this.game.input.activePointer;
         this.game.physics.arcade.enable(this);
     }
 
     update() {
+        this.setPlayerAnimation();
+        this.setPlayerVelocity();
+    }
+
+    setPlayerAnimation() {
+        let pointer = this.game.input.activePointer;
+        let angle = Math.atan2(pointer.y - this.y, pointer.x - this.x);
+        let animation = ''
+
+        if (angle < 0.39 && angle >= -0.39) {
+            animation = 'right';
+        } else if (angle >= 0.39 && angle < 1.18) {
+            animation = 'rightdown';
+        } else if (angle >= 1.18 && angle < 1.87) {
+            animation = 'down';
+        } else if (angle >= 1.87 && angle < 2.66) {
+            animation = 'leftdown';
+        } else if (angle >= 2.66 || angle < -2.66) {
+            animation = 'left'
+        } else if (angle >= -2.66 && angle < -1.87) {
+            animation = 'leftup';
+        } else if (angle >= -1.87 && angle < -1.18) {
+            animation = 'up';
+        } else if (angle >= -1.18 && angle < -0.39) {
+            animation = 'rightup';
+        }
+
+        this.animations.play(animation)
+    }
+
+    setPlayerVelocity() {
         let velocityX = 0;
         let velocityY = 0;
 
@@ -37,35 +69,14 @@ class Player extends Phaser.Sprite {
             velocityY -= 150;
         }
 
+        this.body.velocity.x = velocityX;
+        this.body.velocity.y = velocityY;
+
         if (velocityX === 0 && velocityY === 0) {
             this.animations.stop();
-        } else {
-            this.body.velocity.x = velocityX;
-            this.body.velocity.y = velocityY;
-
-            let animation = ''
-
-            if (velocityY > 0 && velocityX > 0) {
-                animation = 'rightdown'
-            } else if (velocityY > 0 && velocityX < 0) {
-                animation = 'leftdown'
-            } else if (velocityY < 0 && velocityX > 0) {
-                animation = 'rightup'
-            } else if (velocityY < 0 && velocityX < 0) {
-                animation = 'leftup'
-            } else if (velocityY > 0 && velocityX === 0) {
-                animation = 'down'
-            } else if (velocityY < 0 && velocityX === 0) {
-                animation = 'up'
-            } else if (velocityY === 0 && velocityX < 0) {
-                animation = 'left'
-            } else if (velocityY === 0 && velocityX > 0) {
-                animation = 'right'
-            }
-
-            this.animations.play(animation)
         }
     }
 }
+
 
 export default Player;
