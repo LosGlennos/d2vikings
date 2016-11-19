@@ -1,3 +1,5 @@
+import Bullet from './bullet';
+
 class Player extends Phaser.Sprite {
     constructor(game, x, y, frame) {
         super(game, x, y, 'blue_viking', frame);
@@ -13,6 +15,8 @@ class Player extends Phaser.Sprite {
         this.playerPointer = this.game.input.activePointer;
         this.game.physics.arcade.enable(this);
 
+        this.bullet = new Bullet(this.game, 0, 0);
+
         this.wasd = {
             up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),
             down: this.game.input.keyboard.addKey(Phaser.Keyboard.S),
@@ -24,9 +28,20 @@ class Player extends Phaser.Sprite {
     update() {
         this.setPlayerAnimation();
         this.setPlayerVelocity();
+
+        if (this.game.input.activePointer.isDown) {
+            let playerRotation = this.game.physics.arcade.angleToPointer(this);
+            this.bullet.fire(playerRotation, this, this.getAnimation());
+        }
     }
 
     setPlayerAnimation() {
+        let animation = this.getAnimation();
+
+        this.animations.play(animation)
+    }
+
+    getAnimation() {
         let pointer = this.game.input.activePointer;
         let angle = Math.atan2(pointer.y - this.y, pointer.x - this.x);
         let animation = ''
@@ -49,7 +64,7 @@ class Player extends Phaser.Sprite {
             animation = 'rightup';
         }
 
-        this.animations.play(animation)
+        return animation;
     }
 
     setPlayerVelocity() {

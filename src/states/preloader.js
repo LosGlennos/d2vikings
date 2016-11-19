@@ -22,7 +22,8 @@ class Preloader extends Phaser.State {
   }
 
   loadResources() {
-      this.game.load.spritesheet('blue_viking', 'assets/Viking_Blue_Moving.png', 72, 72, 32);      
+      this.game.load.spritesheet('blue_viking', 'assets/Viking_Blue_Moving.png', 72, 72, 32);
+      this.game.load.spritesheet('bullets', 'assets/bullet.png', 16, 16, 4);
   }
 
   onLoadComplete() {
