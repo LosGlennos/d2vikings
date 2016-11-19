@@ -10,9 +10,15 @@ class Player extends Phaser.Sprite {
         this.animations.add('rightdown', [20, 21, 22, 23], 10, true);
         this.animations.add('leftup', [24, 25, 26, 27], 10, true);
         this.animations.add('rightup', [28, 29, 30, 31], 10, true);
-        this.cursors = this.game.input.keyboard.createCursorKeys();
         this.playerPointer = this.game.input.activePointer;
         this.game.physics.arcade.enable(this);
+
+        this.wasd = {
+            up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),
+            down: this.game.input.keyboard.addKey(Phaser.Keyboard.S),
+            left: this.game.input.keyboard.addKey(Phaser.Keyboard.A),
+            right: this.game.input.keyboard.addKey(Phaser.Keyboard.D),
+        };
     }
 
     update() {
@@ -53,19 +59,19 @@ class Player extends Phaser.Sprite {
         this.body.velocity.x = velocityX;
         this.body.velocity.y = velocityY;
 
-        if (this.cursors.right.isDown) {
+        if (this.wasd.right.isDown) {
             velocityX += 150;
         }
 
-        if (this.cursors.left.isDown) {
+        if (this.wasd.left.isDown) {
             velocityX -= 150;
         }
 
-        if (this.cursors.down.isDown) {
+        if (this.wasd.down.isDown) {
             velocityY += 150;
         }
 
-        if (this.cursors.up.isDown) {
+        if (this.wasd.up.isDown) {
             velocityY -= 150;
         }
 
